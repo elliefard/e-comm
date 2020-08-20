@@ -30,10 +30,15 @@ class UsersRepository {
     records.push(attrs);
 
     await this.writeAll(records);
+
+    return attrs;
   }
 
   async writeAll(records) {
-    await fs.promises.writeFile(this.filename, JSON.stringify(records, null, 2));
+    await fs.promises.writeFile(
+      this.filename,
+      JSON.stringify(records, null, 2)
+    );
   }
 
   randomId() {
@@ -47,7 +52,9 @@ class UsersRepository {
 
   async delete(id) {
     const records = await this.getAll();
-    const filteredRecords = records.filter((record) => record.id !== id);
+    const filteredRecords = records.filter(
+      (record) => record.id !== id
+    );
     await this.writeAll(filteredRecords);
   }
 
